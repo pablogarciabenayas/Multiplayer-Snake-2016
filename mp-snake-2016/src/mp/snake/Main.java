@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mp.snake.pkg2016;
+package mp.snake;
 
-import javax.sound.midi.SysexMessage;
 
 /**
  *
