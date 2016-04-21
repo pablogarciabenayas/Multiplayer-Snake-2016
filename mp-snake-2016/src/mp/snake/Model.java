@@ -5,18 +5,20 @@
  */
 package mp.snake;
 
-
 /**
  *
- * @author pablo
+ * @author luisca
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        System.out.println("Hola repositorio!");
+class Model {
+    void izquierda()
+    {
+       if (jugador.setDireccion(0));
     }
+    void derecha(){}
+    void arriba(){}
+    void abajo(){}
+    void acelerar(){}
+    void frenar(){}
+    
     
 }
