@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mp.snake;
+package mp.snake.lanzador;
 
 /**
  *
- * @author luisca
+ * @author pablo
  */
-class jugador {
-
-    static boolean setDireccion(int i) {
-        return false;}
+public class LanzadorSnake {
+    
+    public static void main(String[] args){
+        
+    }
     
 }
