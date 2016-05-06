@@ -13,16 +13,16 @@ public class SocketServidor {
      // Creamos un Socket de aceptación en el servidor esperando conexiones
         ServerSocket svrSocket = new ServerSocket(8000);
         System.out.println("Servidor: esperando conexiones ...\n");
+        ModeloServidor modeloServidor = new ModeloServidor();
     
      // A medida que se conectan los clientes se crean hebras para atenderlos a través
      // de los sockets correspondientes
         int idClient = 0;
         while(true) {
-            
             Socket socket = svrSocket.accept();
             System.out.println("Cliente-" + idClient + " conectado");
-            
-            Thread t = new HebraManejadora(socket, idClient);
+            modeloServidor.addJugador(idClient);
+            Thread t = new HebraManejadora(socket, idClient, modeloServidor);
             t.start();
             
             idClient++;          

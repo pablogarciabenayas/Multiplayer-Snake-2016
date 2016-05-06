@@ -15,11 +15,12 @@ import java.awt.event.KeyListener;
  */
 class Controlador implements KeyListener {
    GameView vista;
-   Model modelo;
-   public Controlador(GameView vista, Model modelo)
+   GestorVistas gestor;
+   
+   public Controlador(GameView vista, GestorVistas g)
    {
        this.vista=vista;
-       this.modelo=modelo;
+       this.gestor=g;
    }
     
 
@@ -30,29 +31,22 @@ class Controlador implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("tecla pulsada");
         switch (e.getKeyCode()){
             case VK_LEFT:{
-            modelo.izquierda();
+            gestor.izquierda();
             break;
             }
             case VK_RIGHT:{
-            modelo.derecha();
+            gestor.derecha();
             break;
             }case VK_DOWN:{
-            modelo.abajo();
+            gestor.abajo();
             break;
             }case VK_UP:{
-            modelo.arriba();
+            gestor.arriba();
             break;
             }
-            case VK_MINUS:{
-            modelo.frenar();
-            break;
-            }case VK_PLUS:{
-            modelo.acelerar();
-            break;
-            }
-           
         }
         
     }

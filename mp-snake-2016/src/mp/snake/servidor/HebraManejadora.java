@@ -1,7 +1,5 @@
 package mp.snake.servidor;
 
-
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,54 +12,68 @@ public class HebraManejadora extends Thread {
 
     private Socket socket;
     private int idClient;
+    private BufferedReader streamIn;
+    private boolean fin;
+    private ModeloServidor modeloServidor;
 
-    public HebraManejadora(Socket socket, int idClient) {
+    public HebraManejadora(Socket socket, int idClient, ModeloServidor modelo) {
         this.socket = socket;
         this.idClient = idClient;
+        this.fin = true;
+        this.modeloServidor = modelo;
+
     }
 
     @Override
     public void run() {
-        BufferedReader streamIn = null;
+
         try {
             // Creamos los streams para la lectura y escritura de objetos a traves de la conexion
             streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            DataOutputStream streamOut = new DataOutputStream(socket.getOutputStream());
+            
 
-            /*
-             // Recogemos la frase que viene del cliente
-             String   mensaje  = streamIn.readLine();
-             System.out.println("Mensaje de " + idClient + mensaje);
-             String[] mensajes = ((String) mensaje).split(";");
-             String   cabecera = mensajes[0];
-             String   frase    = mensajes[1];
+            String mensaje;
 
-             // Se la devolvemos modificada
-             String fraseModificada = null;
-             if(cabecera.equals("MAY")) fraseModificada = frase.toUpperCase() + '\n';
-             else                       fraseModificada = frase.toLowerCase() + '\n';    
-             */
-            while (true) {
-                String fraseCliente = streamIn.readLine();
-                streamOut.writeBytes("cliente " + idClient + ": " + fraseCliente + '\n');
-                streamOut.flush();
+            while (fin) {
+
+                mensaje = streamIn.readLine();
+                String[] token = mensaje.split(";");
+                System.out.println("from client " + mensaje);
+                String cabecera = token[0];
+
+                switch (cabecera) {
+                    case "CON":
+                        modeloServidor.connect(idClient);
+                        break;
+                    case "DIR":
+                        modeloServidor.cambiarDireccion(token[1],idClient);
+                        break;
+                    case "FIN": {
+                        try {
+                            modeloServidor.end();
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+                }
+//                streamOut.writeBytes(
+//                streamOut.flush();
+//                streamIn.close();
+//                streamOut.close();
+
             }
-            // Cerramos la conexion
-            //streamIn.close();
-            //streamOut.close();
-            //socket.close();
         } catch (IOException ex) {
             Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
-             try {
-             streamIn.close();
-             } catch (IOException ex) {
-             Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
-             }
-             
+
+            try {
+                streamIn.close();
+                //streamOut.close();
+            } catch (IOException ex) {
+                Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
-
 }

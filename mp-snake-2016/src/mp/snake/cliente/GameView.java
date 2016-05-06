@@ -7,22 +7,26 @@ package mp.snake.cliente;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
  *
  * @author luisca
  */
-public class GameView extends javax.swing.JPanel  implements Observer{
+public class GameView extends javax.swing.JFrame  implements Observer{
     
-        GridLayout layout;
-        JPanel[][] referencia;
-        Color[] colores={Color.WHITE,Color.BLACK,Color.ORANGE,Color.BLUE,Color.YELLOW};
+        private GridLayout layout;
+        private JPanel[][] referencia;
+        private Color[] colores={Color.WHITE,Color.BLACK,Color.ORANGE,Color.BLUE,Color.YELLOW};
+        private GestorVistas gestor;
         
  
-    public GameView(int filas, int columnas) {
+    public GameView(int filas, int columnas, int id, GestorVistas g) {
         initComponents();
         layout =new GridLayout(filas, columnas);
         referencia = new JPanel[filas][columnas];
@@ -37,7 +41,11 @@ public class GameView extends javax.swing.JPanel  implements Observer{
             }
             
         }
+        
+        this.gestor = g;
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,6 +57,9 @@ public class GameView extends javax.swing.JPanel  implements Observer{
     private void initComponents() {
 
         gamePanel = new javax.swing.JPanel();
+        jButtonFinalizar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         gamePanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -63,30 +74,54 @@ public class GameView extends javax.swing.JPanel  implements Observer{
             .addGap(0, 266, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        jButtonFinalizar.setText("Finalizar");
+        jButtonFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFinalizarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonFinalizar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonFinalizar)
+                    .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarActionPerformed
+            try {
+                // TODO add your handling code here:
+                gestor.finalizar();
+            } catch (IOException ex) {
+                Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButtonFinalizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel gamePanel;
+    private javax.swing.JButton jButtonFinalizar;
     // End of variables declaration//GEN-END:variables
-    void arrancar(){
+    void arrancar(){    
     setVisible(true);
+        setLocationRelativeTo(null);
     }
     void setControlador(Controlador controlador){
         addKeyListener(controlador);
@@ -94,19 +129,12 @@ public class GameView extends javax.swing.JPanel  implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        //Aqui se pinta la serpiente
+         //Aqui se pinta la serpiente
         String msgR=(String)arg;
-        String[]args= msgR.split(",");
-        int x= Integer.parseInt(args[0]);
-        int y= Integer.parseInt(args[1]);
-        Color color= colores[Integer.parseInt(args[2])];
-        referencia[x][y].setBackground(color);
-        /*boolean choque =Boolean.parseBoolean(args[3]);
-        if(!choque)
-        {
-            
-        }*/
-  
+        String[] args= msgR.split(";");
+        
+        
+
     }
 }
 
