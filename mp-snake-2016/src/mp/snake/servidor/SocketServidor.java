@@ -13,7 +13,7 @@ public class SocketServidor {
      // Creamos un Socket de aceptación en el servidor esperando conexiones
         ServerSocket svrSocket = new ServerSocket(8000);
         System.out.println("Servidor: esperando conexiones ...\n");
-        ModeloServidor modeloServidor = new ModeloServidor(100,100);
+        ModeloServidor modeloServidor = new ModeloServidor(50,50);
     
      // A medida que se conectan los clientes se crean hebras para atenderlos a través
      // de los sockets correspondientes

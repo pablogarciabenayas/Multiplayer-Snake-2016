@@ -51,14 +51,15 @@ public class GestorVistas extends Observable {
         this.idCliente = Integer.parseInt(token);
         int x = Integer.parseInt(token0);
         int y = Integer.parseInt(token1);
-        tablero = new GameView(x, y, idCliente, this);
-        tablero.setSize(700, 500);
-        tablero.setLocationRelativeTo(null);
-        tablero.setVisible(true);
-        addObserver(tablero);
-        controlador = new Controlador(tablero, this);
-        tablero.setControlador(controlador);
-        
+        if (tablero == null) {
+            tablero = new GameView(x, y, idCliente, this);
+            tablero.setSize(700, 500);
+            tablero.setLocationRelativeTo(null);
+            tablero.setVisible(true);
+            addObserver(tablero);
+            controlador = new Controlador(tablero, this);
+            tablero.setControlador(controlador);
+        }
     }
 
     void derecha() {
@@ -88,12 +89,12 @@ public class GestorVistas extends Observable {
 
     void mover(String token, String token0, String token1, String token2, String token3) {
         setChanged();
-        notifyObservers(true +";"+ token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
+        notifyObservers(true + ";" + token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
     }
 
     void imprimirTesoro(String token, String token0, String token1) {
         setChanged();
-        notifyObservers(false +";"+token + ";" + token0 + ";" + token1);
+        notifyObservers(false + ";" + token + ";" + token0 + ";" + token1);
     }
 
 }

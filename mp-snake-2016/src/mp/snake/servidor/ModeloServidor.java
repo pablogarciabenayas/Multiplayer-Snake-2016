@@ -22,28 +22,31 @@ public class ModeloServidor {
     private ArrayList<Jugador> jugadores;
     private int tableroX;
     private int tableroY;
-    private int velocidad = 50;
+    private int velocidad = 150;
     private Punto tesoro;
     private Punto tesoroTemporal;
+    Thread hilo = iniciar();
 
     public ModeloServidor(int tamX, int tamY) throws IOException {
         jugadores = new ArrayList<>();
         this.tableroX = tamX;
         this.tableroY = tamY;
         Random rnd = new Random();
-        this.tesoro = new Punto(rnd.nextInt(tableroX),rnd.nextInt(tableroY));
+        this.tesoro = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
         this.tesoroTemporal = new Punto();
+        hilo.start();
+
     }
 
     void addJugador(int id, Socket s) throws IOException {
         Random rnd = new Random();
-
         Punto punto = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
         LinkedList serpiente = new LinkedList();
         serpiente.add(punto);
         Jugador jugador = new Jugador(serpiente, id, s);
         jugador.setDireccion(rnd.nextInt(4));
         jugadores.add(jugador);
+        System.out.println(jugadores.size());
 
     }
 
@@ -58,10 +61,10 @@ public class ModeloServidor {
     }
 
     public void enviarMensaje(String s) throws IOException {
-        System.out.println("a clientes:" +s);
-        for(Jugador j:jugadores){
-           j.getStreamOut().writeBytes(s+"\n");
-           j.getStreamOut().flush();
+        System.out.println("a clientes:" + s);
+        for (Jugador j : jugadores) {
+            j.getStreamOut().writeBytes(s + "\n");
+            j.getStreamOut().flush();
         }
     }
 
@@ -144,10 +147,15 @@ public class ModeloServidor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void posicionToJugadores(int id, int xIni, int yIni, int xFin, int yFin) throws IOException {
+        String cabecera = "MOV";
+        String cuerpo = id + ";" + xIni + ";" + yIni + ";" + xFin + ";" + yFin;
+        enviarMensaje(cabecera + cuerpo);
+    }
+
     public Thread iniciar() {
 
-        Thread th;
-        th = new Thread(new Runnable() {
+        return new Thread() {
 
             @Override
             public void run() {
@@ -239,9 +247,10 @@ public class ModeloServidor {
                             }
                             break;
                     }
-                    
-                    jugadores.get(id).getSerpiente().addFirst(new Punto(xIni,xFin));
-                    posicionToJugadores(jugadores.get(id).getIdCliente(),xIni,yIni,xFin,yFin);                }
+
+                    jugadores.get(id).getSerpiente().addFirst(new Punto(xIni, xFin));
+                    posicionToJugadores(jugadores.get(id).getIdCliente(), xIni, yIni, xFin, yFin);
+                }
 
             }
 
@@ -267,15 +276,6 @@ public class ModeloServidor {
                 }
 
             }
-
-            private void posicionToJugadores(int id, int xIni, int yIni, int xFin, int yFin) throws IOException {
-               String cabecera = "MOV";
-               String cuerpo = id + ";" + xIni + ";"+ yIni + ";" + xFin + ";" +yFin;
-                enviarMensaje(cabecera + cuerpo);
-            }
-
-        });
-
-        return th;
+        };
     }
 }
