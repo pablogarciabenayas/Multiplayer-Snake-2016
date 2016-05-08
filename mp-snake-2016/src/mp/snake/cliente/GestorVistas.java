@@ -55,8 +55,10 @@ public class GestorVistas extends Observable {
         tablero.setSize(700, 500);
         tablero.setLocationRelativeTo(null);
         tablero.setVisible(true);
+        addObserver(tablero);
         controlador = new Controlador(tablero, this);
         tablero.setControlador(controlador);
+        
     }
 
     void derecha() {
@@ -86,12 +88,12 @@ public class GestorVistas extends Observable {
 
     void mover(String token, String token0, String token1, String token2, String token3) {
         setChanged();
-        notifyObservers(token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
+        notifyObservers(true +";"+ token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
     }
 
     void imprimirTesoro(String token, String token0, String token1) {
         setChanged();
-        notifyObservers(token + ";" + token0 + ";" + token1);
+        notifyObservers(false +";"+token + ";" + token0 + ";" + token1);
     }
 
 }

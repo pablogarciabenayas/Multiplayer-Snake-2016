@@ -22,7 +22,8 @@ public class GameView extends javax.swing.JFrame  implements Observer{
     
         private GridLayout layout;
         private JPanel[][] referencia;
-        private Color[] colores={Color.WHITE,Color.BLACK,Color.ORANGE,Color.BLUE,Color.YELLOW};
+        private Color[] coloresTablero={Color.WHITE,Color.BLACK,Color.ORANGE};
+        private Color[] coloresJugador={Color.RED,Color.BLUE,Color.PINK,Color.BLUE,Color.YELLOW};
         private GestorVistas gestor;
         
  
@@ -67,11 +68,11 @@ public class GameView extends javax.swing.JFrame  implements Observer{
         gamePanel.setLayout(gamePanelLayout);
         gamePanelLayout.setHorizontalGroup(
             gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         gamePanelLayout.setVerticalGroup(
             gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 266, Short.MAX_VALUE)
+            .addGap(0, 348, Short.MAX_VALUE)
         );
 
         jButtonFinalizar.setText("Finalizar");
@@ -86,20 +87,23 @@ public class GameView extends javax.swing.JFrame  implements Observer{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonFinalizar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(691, Short.MAX_VALUE)
+                        .addComponent(jButtonFinalizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonFinalizar)
-                    .addComponent(gamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(gamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonFinalizar)
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,9 +136,15 @@ public class GameView extends javax.swing.JFrame  implements Observer{
          //Aqui se pinta la serpiente
         String msgR=(String)arg;
         String[] args= msgR.split(";");
-        
-        
-
+        Color colorSerpiente = (Boolean.parseBoolean(args[0]))? coloresJugador[Integer.parseInt(args[1])]:coloresTablero[Integer.parseInt(args[1])];
+        int x = Integer.parseInt(args[2]);
+        int y = Integer.parseInt(args[3]);
+        referencia[x][y].setBackground(colorSerpiente);
+        if(args.length > 4){
+            x=Integer.parseInt(args[4]);
+            y=Integer.parseInt(args[5]);
+            referencia[4][5].setBackground(coloresTablero[0]);
+        }
     }
 }
 

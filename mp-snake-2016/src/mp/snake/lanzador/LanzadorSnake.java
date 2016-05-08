@@ -12,6 +12,9 @@ package mp.snake.lanzador;
 public class LanzadorSnake {
     
     public static void main(String[] args){
+        LanzadorVista vistaInicial = new LanzadorVista();
+        vistaInicial.setLocationRelativeTo(null);
+        vistaInicial.setVisible(true);
         
     }
     

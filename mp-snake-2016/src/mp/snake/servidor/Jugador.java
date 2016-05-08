@@ -5,6 +5,9 @@
  */
 package mp.snake.servidor;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -16,12 +19,16 @@ public class Jugador {
     private LinkedList serpiente;
     private int idCliente;
     private int direccion;
+    private Socket socket;
+    private DataOutputStream streamOut;
 
-    public Jugador(LinkedList serpiente, int idCliente) {
+    public Jugador(LinkedList serpiente, int idCliente , Socket sc) throws IOException {
         this.serpiente = serpiente;
         this.idCliente = idCliente;
         Random rnd = new Random();
         this.direccion = rnd.nextInt(4);
+        this.socket = sc;
+        streamOut = new DataOutputStream(socket.getOutputStream());
     }
 
     public LinkedList getSerpiente() {
@@ -46,6 +53,22 @@ public class Jugador {
     
     public Jugador copia() throws CloneNotSupportedException{
         return (Jugador)this.clone();
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public DataOutputStream getStreamOut() {
+        return streamOut;
+    }
+
+    public void setStreamOut(DataOutputStream streamOut) {
+        this.streamOut = streamOut;
     }
     
     
