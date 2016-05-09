@@ -29,6 +29,7 @@ public class GameView extends javax.swing.JFrame  implements Observer{
  
     public GameView(int filas, int columnas, int id, GestorVistas g) {
         initComponents();
+        jButtonFinalizar.setFocusable(false);
         layout =new GridLayout(filas, columnas);
         referencia = new JPanel[filas][columnas];
         gamePanel.setLayout(layout);

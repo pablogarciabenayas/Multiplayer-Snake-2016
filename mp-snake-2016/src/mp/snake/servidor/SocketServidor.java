@@ -14,11 +14,16 @@ public class SocketServidor {
         ServerSocket svrSocket = new ServerSocket(8000);
         System.out.println("Servidor: esperando conexiones ...\n");
         ModeloServidor modeloServidor = new ModeloServidor(50,50);
+     //Vista de servidor con boton para finalizar el servidor
+        ServerView serverView = new ServerView(modeloServidor);
+        serverView.setLocationRelativeTo(null);
+        serverView.setVisible(true);
+        System.out.println("");
     
      // A medida que se conectan los clientes se crean hebras para atenderlos a través
      // de los sockets correspondientes
         int idClient = 0;
-        while(true) {
+        while(!modeloServidor.isTerminar()) {
             Socket socket = svrSocket.accept();
             System.out.println("Cliente-" + idClient + " conectado");
             modeloServidor.addJugador(idClient,socket);
@@ -29,6 +34,7 @@ public class SocketServidor {
             
         }
         
+        System.out.println("Servidor Finalizado");
     }
     
 }

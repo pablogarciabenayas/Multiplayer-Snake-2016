@@ -26,8 +26,10 @@ public class ModeloServidor {
     private Punto tesoro;
     private Punto tesoroTemporal;
     Thread hilo = iniciar();
+    private boolean terminar;
 
     public ModeloServidor(int tamX, int tamY) throws IOException {
+        terminar = false;
         jugadores = new ArrayList<>();
         this.tableroX = tamX;
         this.tableroY = tamY;
@@ -38,7 +40,7 @@ public class ModeloServidor {
 
     }
 
-    void addJugador(int id, Socket s) throws IOException {
+    public void addJugador(int id, Socket s) throws IOException {
         Random rnd = new Random();
         Punto punto = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
         LinkedList serpiente = new LinkedList();
@@ -58,7 +60,17 @@ public class ModeloServidor {
     }
 
     public void end() throws IOException, InterruptedException {
+        //Enviar mensaje de finalizar a todos los jugadores
+        //Cerrar socket
+        this.terminar = true;
+        
     }
+
+    public boolean isTerminar() {
+        return terminar;
+    }
+    
+    
 
     public void enviarMensaje(String s) throws IOException {
         System.out.println("a clientes:" + s);
