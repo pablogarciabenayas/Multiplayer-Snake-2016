@@ -48,7 +48,6 @@ public class ModeloServidor {
         Jugador jugador = new Jugador(serpiente, id, s);
         jugador.setDireccion(rnd.nextInt(4));
         jugadores.add(jugador);
-        System.out.println(jugadores.size());
 
     }
 
@@ -162,7 +161,7 @@ public class ModeloServidor {
     private void posicionToJugadores(int id, int xIni, int yIni, int xFin, int yFin) throws IOException {
         String cabecera = "MOV";
         String cuerpo = id + ";" + xIni + ";" + yIni + ";" + xFin + ";" + yFin;
-        enviarMensaje(cabecera + cuerpo);
+        enviarMensaje(cabecera+";" + cuerpo);
     }
 
     public Thread iniciar() {
@@ -260,7 +259,7 @@ public class ModeloServidor {
                             break;
                     }
 
-                    jugadores.get(id).getSerpiente().addFirst(new Punto(xIni, xFin));
+                    jugadores.get(id).getSerpiente().addFirst(new Punto(xIni, yIni));
                     posicionToJugadores(jugadores.get(id).getIdCliente(), xIni, yIni, xFin, yFin);
                 }
 

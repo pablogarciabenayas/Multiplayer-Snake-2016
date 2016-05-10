@@ -10,7 +10,6 @@ package mp.snake.cliente;
  * @author pablo
  */
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -40,18 +39,17 @@ public class HebraCliente extends Thread {
             while (fin) {
 
                 String mensaje = streamIn.readLine();
-                System.out.println("from server "+mensaje);
+                System.out.println("from server " + mensaje);
                 String[] token = mensaje.split(";");
-           
 
                 String cabecera = token[0];
 
                 switch (cabecera) {
                     case "IDC":
-                        gestor.empezar(token[1],token[2],token[3]);
+                        gestor.empezar(token[1], token[2], token[3]);
                         break;
                     case "MOV":
-                        gestor.mover(token[1],token[2],token[3],token[4],token[5]);
+                        gestor.mover(token[1], token[2], token[3], token[4], token[5]);
                         break;
                     case "FIN":
                         //end();
@@ -60,8 +58,7 @@ public class HebraCliente extends Thread {
                         //puntuacion();
                         break;
                     case "TSR:":
-                        // tesoro (int x, int y, int tipo);
-                        gestor.imprimirTesoro(token[1],token[2],token[3]);
+                        gestor.imprimirTesoro(token[1], token[2], token[3]);
                         break;
                 }
 //                streamOut.writeBytes(
@@ -72,17 +69,10 @@ public class HebraCliente extends Thread {
             }
         } catch (IOException ex) {
             Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
 
-            try {
-                streamIn.close();
-            } catch (IOException ex) {
-                Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
 
     }
-
 
     public void end() throws IOException, InterruptedException {
         this.fin = false;
@@ -91,8 +81,7 @@ public class HebraCliente extends Thread {
 
     }
 
-
     private void puntuacion() {
-        
+
     }
 }

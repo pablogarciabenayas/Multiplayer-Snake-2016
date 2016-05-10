@@ -9,7 +9,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Observable;
-import mp.snake.servidor.HebraManejadora;
 
 /**
  *
@@ -52,30 +51,39 @@ public class GestorVistas extends Observable {
         int x = Integer.parseInt(token0);
         int y = Integer.parseInt(token1);
         if (tablero == null) {
+            
             tablero = new GameView(x, y, idCliente, this);
-            tablero.setSize(700, 500);
+            controlador = new Controlador(tablero, this);
+            tablero.setControlador(controlador);
+            tablero.setSize(700, 500); // revisar tamaño tablero
             tablero.setLocationRelativeTo(null);
             tablero.setVisible(true);
             addObserver(tablero);
-            controlador = new Controlador(tablero, this);
-            tablero.setControlador(controlador);
         }
     }
 
-    void derecha() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void derecha() throws IOException {
+        String cabecera = "DIR";
+        String cuerpo = "DERECHA";
+        enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void abajo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void abajo() throws IOException {
+        String cabecera = "DIR";
+        String cuerpo = "ABAJO";
+        enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void arriba() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void arriba() throws IOException {
+        String cabecera = "DIR";
+        String cuerpo = "ARRIBA";
+        enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void izquierda() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void izquierda() throws IOException {
+        String cabecera = "DIR";
+        String cuerpo = "IZQUIERDA";
+        enviarMensaje(cabecera + ";" + cuerpo);
     }
 
     public void finalizar() throws IOException, InterruptedException {

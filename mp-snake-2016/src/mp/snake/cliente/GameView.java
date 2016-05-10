@@ -137,14 +137,14 @@ public class GameView extends javax.swing.JFrame  implements Observer{
          //Aqui se pinta la serpiente
         String msgR=(String)arg;
         String[] args= msgR.split(";");
-        Color colorSerpiente = (Boolean.parseBoolean(args[0]))? coloresJugador[Integer.parseInt(args[1])]:coloresTablero[Integer.parseInt(args[1])];
+        Color color = (Boolean.parseBoolean(args[0]))? coloresJugador[Integer.parseInt(args[1])]:coloresTablero[Integer.parseInt(args[1])];
         int x = Integer.parseInt(args[2]);
         int y = Integer.parseInt(args[3]);
-        referencia[x][y].setBackground(colorSerpiente);
+        referencia[x][y].setBackground(color);
         if(args.length > 4){
             x=Integer.parseInt(args[4]);
             y=Integer.parseInt(args[5]);
-            referencia[4][5].setBackground(coloresTablero[0]);
+            referencia[x][y].setBackground(coloresTablero[0]);
         }
     }
 }

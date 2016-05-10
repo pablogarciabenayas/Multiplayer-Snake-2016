@@ -8,6 +8,9 @@ package mp.snake.cliente;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,20 +34,35 @@ class Controlador implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("tecla pulsada");
         switch (e.getKeyCode()){
             case VK_LEFT:{
-            gestor.izquierda();
+            try {
+                gestor.izquierda();
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
             }
             case VK_RIGHT:{
-            gestor.derecha();
+            try {
+                gestor.derecha();
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
             }case VK_DOWN:{
-            gestor.abajo();
+            try {
+                gestor.abajo();
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
             }case VK_UP:{
-            gestor.arriba();
+            try {
+                gestor.arriba();
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
             }
         }
