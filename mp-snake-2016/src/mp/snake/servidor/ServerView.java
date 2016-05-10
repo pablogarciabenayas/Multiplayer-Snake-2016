@@ -5,6 +5,10 @@
  */
 package mp.snake.servidor;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author pablo
@@ -77,7 +81,14 @@ public class ServerView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            modelo.end();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonFinalizarActionPerformed
 
 

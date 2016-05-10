@@ -52,7 +52,7 @@ public class HebraCliente extends Thread {
                         gestor.mover(token[1], token[2], token[3], token[4], token[5]);
                         break;
                     case "FIN":
-                        //end();
+                        end();
                         break;
                     case "PTS":
                         //puntuacion();
@@ -70,6 +70,8 @@ public class HebraCliente extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
 
+        } catch (InterruptedException ex) {
+            Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -78,6 +80,7 @@ public class HebraCliente extends Thread {
         this.fin = false;
         Thread.sleep(500);
         streamIn.close();
+        socket.close();
 
     }
 

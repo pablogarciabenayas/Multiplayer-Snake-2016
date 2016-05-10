@@ -22,7 +22,7 @@ public class ModeloServidor {
     private ArrayList<Jugador> jugadores;
     private int tableroX;
     private int tableroY;
-    private int velocidad = 150;
+    private int velocidad = 800;
     private Punto tesoro;
     private Punto tesoroTemporal;
     Thread hilo = iniciar();
@@ -61,7 +61,17 @@ public class ModeloServidor {
     public void end() throws IOException, InterruptedException {
         //Enviar mensaje de finalizar a todos los jugadores
         //Cerrar socket
+        String cabecera = "FIN";
+        String cuerpo;
         this.terminar = true;
+        for(Jugador j:jugadores){
+            cuerpo = Integer.toString(j.getIdCliente());
+            enviarMensaje(cabecera+";"+cuerpo);
+            j.getStreamOut().close();
+            j.getSocket().close();
+        }
+        
+        
 
     }
 
@@ -264,6 +274,8 @@ public class ModeloServidor {
                 }
 
             }
+            
+            
 
             private boolean chocaContraJugador(int id) {
                 boolean choca = false;
