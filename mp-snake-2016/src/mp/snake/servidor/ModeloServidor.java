@@ -62,15 +62,13 @@ public class ModeloServidor {
         //Enviar mensaje de finalizar a todos los jugadores
         //Cerrar socket
         String cabecera = "FIN";
-        String cuerpo;
-        this.terminar = true;
+        
         for(Jugador j:jugadores){
-            cuerpo = Integer.toString(j.getIdCliente());
-            enviarMensaje(cabecera+";"+cuerpo);
+            enviarMensaje(cabecera);
             j.getStreamOut().close();
             j.getSocket().close();
         }
-        
+        this.terminar = true;
         
 
     }
