@@ -51,7 +51,6 @@ public class GestorVistas extends Observable {
         int x = Integer.parseInt(token0);
         int y = Integer.parseInt(token1);
         if (tablero == null) {
-            
             tablero = new GameView(x, y, idCliente, this);
             controlador = new Controlador(tablero, this);
             tablero.setControlador(controlador);
@@ -95,13 +94,16 @@ public class GestorVistas extends Observable {
         System.exit(0);
     }
 
-    void mover(String token, String token0, String token1, String token2, String token3) {
+    public void mover(String token, String token0, String token1, String token2, String token3) {
         setChanged();
         notifyObservers(true + ";" + token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
     }
 
-    void imprimirTesoro(String token, String token0, String token1) {
+    public void imprimirTesoro(String token, String token0, String token1) {
         setChanged();
+        System.out.println("token:" + token);
+        System.out.println("token:" + token0);
+        System.out.println("token:" + token1);
         notifyObservers(false + ";" + token + ";" + token0 + ";" + token1);
     }
 

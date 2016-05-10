@@ -62,14 +62,12 @@ public class ModeloServidor {
         //Enviar mensaje de finalizar a todos los jugadores
         //Cerrar socket
         this.terminar = true;
-        
+
     }
 
     public boolean isTerminar() {
         return terminar;
     }
-    
-    
 
     public void enviarMensaje(String s) throws IOException {
         System.out.println("a clientes:" + s);
@@ -132,15 +130,17 @@ public class ModeloServidor {
 
     private void addTesoro(int t) throws IOException {
         Random rnd = new Random();
-        int x = rnd.nextInt(tableroX);
-        int y = rnd.nextInt(tableroY);
+
         if (t == 1) {
+            int x = rnd.nextInt(tableroX);
+            int y = rnd.nextInt(tableroY);
             tesoro = new Punto(x, y);
             pintarTesoro(tesoro.getX(), tesoro.getY(), 1);
         } else {
-
+            int x = rnd.nextInt(tableroX);
+            int y = rnd.nextInt(tableroY);
             tesoroTemporal = new Punto(x, y);
-            pintarTesoro(tesoro.getX(), tesoro.getY(), 2);
+            pintarTesoro(tesoroTemporal.getX(), tesoroTemporal.getY(), 2);
         }
     }
 
@@ -161,7 +161,7 @@ public class ModeloServidor {
     private void posicionToJugadores(int id, int xIni, int yIni, int xFin, int yFin) throws IOException {
         String cabecera = "MOV";
         String cuerpo = id + ";" + xIni + ";" + yIni + ";" + xFin + ";" + yFin;
-        enviarMensaje(cabecera+";" + cuerpo);
+        enviarMensaje(cabecera + ";" + cuerpo);
     }
 
     public Thread iniciar() {

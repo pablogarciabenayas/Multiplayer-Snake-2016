@@ -135,7 +135,7 @@ public class GameView extends javax.swing.JFrame  implements Observer{
     @Override
     public void update(Observable o, Object arg) {
          //Aqui se pinta la serpiente
-        String msgR=(String)arg;
+        String msgR=(String) arg;
         String[] args= msgR.split(";");
         Color color = (Boolean.parseBoolean(args[0]))? coloresJugador[Integer.parseInt(args[1])]:coloresTablero[Integer.parseInt(args[1])];
         int x = Integer.parseInt(args[2]);

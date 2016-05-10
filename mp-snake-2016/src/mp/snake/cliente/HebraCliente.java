@@ -57,7 +57,7 @@ public class HebraCliente extends Thread {
                     case "PTS":
                         //puntuacion();
                         break;
-                    case "TSR:":
+                    case "TSR":
                         gestor.imprimirTesoro(token[1], token[2], token[3]);
                         break;
                 }
