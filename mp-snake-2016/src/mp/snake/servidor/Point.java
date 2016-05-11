@@ -7,40 +7,68 @@ package mp.snake.servidor;
 
 /**
  *
- * @author pablo
+ * Clase Point, incluye coordenadas x,y para construir la serpiente.
  */
-public class Punto { 
+public class Point {
+
     private int x;
     private int y;
 
-    public Punto(){
-        this(0,0);
-    }
-     /**
-     * Constructor de la clase Punto
+    /**
+     * Contructor por defecto.
+     *
      */
-    
-    public Punto(int x, int y) {
+    public Point() {
+        this(0, 0);
+    }
+
+    /**
+     * Constructor con parametros.
+     *
+     * @param x
+     * @param y
+     */
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     *
+     * @return x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @param x
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     *
+     * @return y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     *
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     *
+     * @return hash
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -49,6 +77,12 @@ public class Punto {
         return hash;
     }
 
+    /**
+     * Metodo que permite comparar objetos de la clase point.
+     *
+     * @param obj
+     * @return boolean
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -57,7 +91,7 @@ public class Punto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Punto other = (Punto) obj;
+        final Point other = (Point) obj;
         if (this.x != other.x) {
             return false;
         }
@@ -66,8 +100,5 @@ public class Punto {
         }
         return true;
     }
-    
-    
-    
-    
+
 }

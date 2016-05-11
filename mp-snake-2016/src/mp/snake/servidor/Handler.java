@@ -10,7 +10,13 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Handler extends Thread implements Observer{
+/**
+ *
+ *
+ * Clase que gestionara las conexiones que se realizan al servidor, extiende de
+ * la clase Thread, implementa la interfaz Oberser.
+ */
+public class Handler extends Thread implements Observer {
 
     private Socket socket;
     private int idClient;
@@ -20,7 +26,12 @@ public class Handler extends Thread implements Observer{
     private DataOutputStream streamOut;
 
     /**
-     * Esta hebra se encarga de controlar el servidor correctamente
+     * Constructor de clase
+     *
+     * @param socket
+     * @param idClient
+     * @param modelo
+     * @throws IOException
      */
     public Handler(Socket socket, int idClient, Model modelo) throws IOException {
         this.socket = socket;
@@ -31,11 +42,15 @@ public class Handler extends Thread implements Observer{
 
     }
 
+    /**
+     * Sobrecarga del metodo run de la clase thread, encargado de leer las
+     * peticiones que se reciben al hilo servidor.
+     */
     @Override
     public void run() {
 
         try {
-            // Creamos los streams para la lectura y escritura de objetos a traves de la conexion
+            // Creamos stream de lectura de objetos a traves de la conexion
             streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String mensaje;
@@ -83,6 +98,12 @@ public class Handler extends Thread implements Observer{
 
     }
 
+    /**
+     * Metodo update impletamentado.
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         String msg = (String) arg;

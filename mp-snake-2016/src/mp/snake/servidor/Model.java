@@ -20,12 +20,12 @@ import java.util.logging.Logger;
  */
 public class Model extends Observable{
     
-    private ArrayList<Jugador> jugadores;
+    private ArrayList<Player> jugadores;
     private int tableroX;
     private int tableroY;
     private int velocidad = 400;
-    private Punto tesoro;
-    private Punto tesoroTemporal;
+    private Point tesoro;
+    private Point tesoroTemporal;
     Thread hilo = iniciar();
     private boolean terminar;
     /**
@@ -37,8 +37,8 @@ public class Model extends Observable{
         this.tableroX = tamX;
         this.tableroY = tamY;
         Random rnd = new Random();
-        this.tesoro = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
-        this.tesoroTemporal = new Punto();
+        this.tesoro = new Point(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
+        this.tesoroTemporal = new Point();
         hilo.start();
 
     }
@@ -47,10 +47,10 @@ public class Model extends Observable{
      */
     public void addJugador(int id, Socket s) throws IOException {
         Random rnd = new Random();
-        Punto punto = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
+        Point punto = new Point(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
         LinkedList serpiente = new LinkedList();
         serpiente.add(punto);
-        Jugador jugador = new Jugador(serpiente, id, s);
+        Player jugador = new Player(serpiente, id, s);
         jugador.setDireccion(rnd.nextInt(4));
         jugadores.add(jugador);
 
@@ -147,12 +147,12 @@ public class Model extends Observable{
         if (t == 1) {
             int x = rnd.nextInt(tableroX);
             int y = rnd.nextInt(tableroY);
-            tesoro = new Punto(x, y);
+            tesoro = new Point(x, y);
             pintarTesoro(tesoro.getX(), tesoro.getY(), 1);
         } else {
             int x = rnd.nextInt(tableroX);
             int y = rnd.nextInt(tableroY);
-            tesoroTemporal = new Punto(x, y);
+            tesoroTemporal = new Point(x, y);
             pintarTesoro(tesoroTemporal.getX(), tesoroTemporal.getY(), 2);
         }
     }
@@ -166,7 +166,7 @@ public class Model extends Observable{
         } else {
             //actualizar puntuacion jugador id con puntuacion tesoro tipo 2;    
         }
-        jugadores.get(id).getSerpiente().add(new Punto());
+        jugadores.get(id).getSerpiente().add(new Point());
     }
     /**
      * Fin del juego
@@ -198,7 +198,7 @@ public class Model extends Observable{
                     }
 
                     //
-                    for (Jugador j : jugadores) {
+                    for (Player j : jugadores) {
                         try {
                             actualizarPosicion(j.getIdCliente());
                             isTesoroComido(j.getIdCliente());
@@ -230,10 +230,10 @@ public class Model extends Observable{
      */
             private void actualizarPosicion(int id) throws IOException {
 
-                int xIni = ((Punto) jugadores.get(id).getSerpiente().getFirst()).getX();
-                int yIni = ((Punto) jugadores.get(id).getSerpiente().getFirst()).getY();
-                int xFin = ((Punto) jugadores.get(id).getSerpiente().getLast()).getX();
-                int yFin = ((Punto) jugadores.get(id).getSerpiente().getLast()).getY();
+                int xIni = ((Point) jugadores.get(id).getSerpiente().getFirst()).getX();
+                int yIni = ((Point) jugadores.get(id).getSerpiente().getFirst()).getY();
+                int xFin = ((Point) jugadores.get(id).getSerpiente().getLast()).getX();
+                int yFin = ((Point) jugadores.get(id).getSerpiente().getLast()).getY();
 
                 LinkedList ll = (LinkedList) jugadores.get(id).getSerpiente().clone();
                 ll.removeFirst();
@@ -280,7 +280,7 @@ public class Model extends Observable{
                             break;
                     }
 
-                    jugadores.get(id).getSerpiente().addFirst(new Punto(xIni, yIni));
+                    jugadores.get(id).getSerpiente().addFirst(new Point(xIni, yIni));
                     posicionToJugadores(jugadores.get(id).getIdCliente(), xIni, yIni, xFin, yFin);
                 }
 
@@ -293,7 +293,7 @@ public class Model extends Observable{
             private boolean chocaContraJugador(int id) {
                 boolean choca = false;
 
-                for (Jugador j : jugadores) {
+                for (Player j : jugadores) {
                     if (j.getIdCliente() != id && !choca) {
                         if (j.getSerpiente().contains(jugadores.get(id).getSerpiente().getFirst())) {
                             choca = true;
@@ -306,10 +306,10 @@ public class Model extends Observable{
              * Si el tesoro es comido la serpiente crece
              */
             private void isTesoroComido(int id) throws IOException {
-                if (tesoro.equals((Punto) jugadores.get(id).getSerpiente().getFirst())) {
+                if (tesoro.equals((Point) jugadores.get(id).getSerpiente().getFirst())) {
                     tesoroComido(1, id);
                 }
-                if (tesoroTemporal.equals((Punto) jugadores.get(id).getSerpiente().getFirst())) {
+                if (tesoroTemporal.equals((Point) jugadores.get(id).getSerpiente().getFirst())) {
                     tesoroComido(2, id);
                 }
 

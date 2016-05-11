@@ -11,16 +11,15 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pablo
+ * Clase que contiene la vista del servidor.
  */
 public class ServerView extends javax.swing.JFrame { //Vista del servidor con un boton para salir
 
     /**
      * Creates new form ServerView
      */
-    
     private Model modelo;
-    
+
     public ServerView() {
         initComponents();
     }
