@@ -12,7 +12,7 @@ import java.util.Observable;
 
 /**
  *
- * @author pablo
+ * Clase ViewHandler.
  */
 public class ViewHandler extends Observable {
 
@@ -23,15 +23,17 @@ public class ViewHandler extends Observable {
     private ConnectView conexion = new ConnectView(this);
     private Socket socket;
     private DataOutputStream streamOut;
+
     /**
-     * Inicia las vistas
+     * Inicia las vistas.
      */
     public void iniciar() {
         conexion.setLocationRelativeTo(null);
         conexion.setVisible(true);
     }
-/**
-     * Conecta con el servidor 
+
+    /**
+     * Conecta con el servidor.
      */
     public void conectar() throws IOException {
         conexion.dispose();
@@ -42,16 +44,25 @@ public class ViewHandler extends Observable {
         hebra = new ClientThread(this, socket);
         hebra.start();
     }
+
     /**
-     * Paso de mensajes 
+     * Paso de mensajes
+     *
+     * @param String
+     * @throws IOException
      */
     private void enviarMensaje(String con) throws IOException {
         System.out.println(con + " al servidor ");
         streamOut.writeBytes(con + "\n");
         streamOut.flush();
     }
+
     /**
-     * Automaticamente comienza el juego
+     * Inicia partida.
+     *
+     * @param token
+     * @param token0
+     * @param token1
      */
     void empezar(String token, String token0, String token1) {
 
@@ -69,30 +80,56 @@ public class ViewHandler extends Observable {
         }
     }
 
-    void derecha() throws IOException {
+    /**
+     * Mensaje de procolo de comunicación, girar a la derecha.
+     *
+     * @throws IOException
+     */
+    public void derecha() throws IOException {
         String cabecera = "DIR";
         String cuerpo = "DERECHA";
         enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void abajo() throws IOException {
+    /**
+     * Mensaje de procolo de comunicación, girar abajo
+     *
+     * @throws IOException
+     */
+    public void abajo() throws IOException {
         String cabecera = "DIR";
         String cuerpo = "ABAJO";
         enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void arriba() throws IOException {
+    /**
+     * Mensaje de procolo de comunicación, girar arriba
+     *
+     * @throws IOException
+     */
+    public void arriba() throws IOException {
         String cabecera = "DIR";
         String cuerpo = "ARRIBA";
         enviarMensaje(cabecera + ";" + cuerpo);
     }
 
-    void izquierda() throws IOException {
+    /**
+     * Mensaje de procolo de comunicación, girar a la izquierda
+     *
+     * @throws IOException
+     */
+    public void izquierda() throws IOException {
         String cabecera = "DIR";
         String cuerpo = "IZQUIERDA";
         enviarMensaje(cabecera + ";" + cuerpo);
     }
 
+    /**
+     * Mensaje de procolo de comunicación, finaliza partida
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void finalizar() throws IOException, InterruptedException {
         tablero.dispose();
         enviarMensaje("FIN;" + Integer.toString(idCliente));
@@ -102,12 +139,26 @@ public class ViewHandler extends Observable {
         System.exit(0);
     }
 
+    /**
+     * Mensaje de procolo de comunicación, movimiento de serpiente
+     *
+     * @param token
+     * @param token0
+     * @param token1
+     * @param token2
+     * @param token3
+     */
     public void mover(String token, String token0, String token1, String token2, String token3) {
         setChanged();
         notifyObservers(true + ";" + token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
     }
+
     /**
-     * Se imprimen los tesoros
+     * Pinta el tesoro en el tablero de juego
+     *
+     * @param token
+     * @param token0
+     * @param token1
      */
     public void imprimirTesoro(String token, String token0, String token1) {
         setChanged();

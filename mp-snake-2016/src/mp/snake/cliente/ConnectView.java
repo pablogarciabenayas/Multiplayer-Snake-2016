@@ -11,28 +11,43 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pablo
+ * Clase ConnectView, vista de la conexion con el servidor.
  */
 public class ConnectView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConnectView
-     * 
-     */
     private ViewHandler gestor;
 
+    /**
+     * Devuelve direccionIp introducida
+     *
+     * @return String
+     */
     public String getDireccionIp() {
         return jTextFieldIP.getText();
     }
 
+    /**
+     * Devuelve puerto introducido
+     *
+     * @return int
+     */
     public int getPuerto() {
         return Integer.parseInt(jTextFieldPuerto.getText());
     }
+
+    /**
+     * Constructor de clase.
+     */
     public ConnectView() {
         initComponents();
     }
 
-    ConnectView(ViewHandler g) {
+    /**
+     * Constructor con parametro ViewHandler
+     *
+     * @param ViewHandler
+     */
+    public ConnectView(ViewHandler g) {
         this.gestor = g;
         initComponents();
     }
@@ -117,6 +132,7 @@ public class ConnectView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void jButtonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConectarActionPerformed
         try {
             // TODO add your handling code here:
@@ -126,7 +142,7 @@ public class ConnectView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonConectarActionPerformed
 
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonConectar;
     private javax.swing.JLabel jLabel1;

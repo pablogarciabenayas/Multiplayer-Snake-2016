@@ -7,12 +7,12 @@ package mp.snake.cliente;
 
 /**
  *
- * @author luisca
+ * Clase PointsView, contiene la vista de la puntuacion
  */
 public class PointsView extends javax.swing.JFrame {
 
     /**
-     * Creates new form VistaPuntos
+     * Constructor de clase.
      */
     public PointsView() {
         initComponents();

@@ -16,38 +16,44 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author luisca
+ * Clase GameView, vista del tablero de juego con boton que permite finalizar.
  */
-public class GameView extends javax.swing.JFrame  implements Observer{
-    
-        private GridLayout layout;
-        private JPanel[][] referencia;
-        private Color[] coloresTablero={Color.WHITE,Color.BLACK,Color.ORANGE};
-        private Color[] coloresJugador={Color.RED,Color.BLUE,Color.PINK,Color.BLUE,Color.YELLOW};
-        private ViewHandler gestor;
-        
- 
+public class GameView extends javax.swing.JFrame implements Observer {
+
+    private GridLayout layout;
+    private JPanel[][] referencia;
+    private Color[] coloresTablero = {Color.WHITE, Color.BLACK, Color.ORANGE};
+    private Color[] coloresJugador = {Color.RED, Color.BLUE, Color.PINK, Color.BLUE, Color.YELLOW};
+    private ViewHandler gestor;
+
+    /**
+     * Constructor de clase, incializa el tablero y setea el grid de referencia
+     * con los valores de filas y columnas.
+     *
+     * @param filas
+     * @param columnas
+     * @param id
+     * @param g
+     */
     public GameView(int filas, int columnas, int id, ViewHandler g) {
         initComponents();
         jButtonFinalizar.setFocusable(false);
-        layout =new GridLayout(filas, columnas);
+        layout = new GridLayout(filas, columnas);
         referencia = new JPanel[filas][columnas];
         gamePanel.setLayout(layout);
         for (int i = 0; i < layout.getRows(); i++) {
-            for (int j = 0; j <layout.getColumns(); j++) {
-                JPanel p= new JPanel();
+            for (int j = 0; j < layout.getColumns(); j++) {
+                JPanel p = new JPanel();
                 p.setBackground(Color.WHITE);
-                referencia[i][j]=p;
+                referencia[i][j] = p;
                 gamePanel.add(p);
-                 
+
             }
-            
+
         }
-        
+
         this.gestor = g;
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,14 +115,14 @@ public class GameView extends javax.swing.JFrame  implements Observer{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarActionPerformed
-            try {
-                // TODO add your handling code here:
-                gestor.finalizar();
-            } catch (IOException ex) {
-                Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            // TODO add your handling code here:
+            gestor.finalizar();
+        } catch (IOException ex) {
+            Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonFinalizarActionPerformed
 
 
@@ -124,30 +130,36 @@ public class GameView extends javax.swing.JFrame  implements Observer{
     private javax.swing.JPanel gamePanel;
     private javax.swing.JButton jButtonFinalizar;
     // End of variables declaration//GEN-END:variables
-    void arrancar(){    
-    setVisible(true);
+    /**
+     * Muestra ventana.
+     */
+    public void arrancar() {
+        setVisible(true);
         setLocationRelativeTo(null);
     }
-    void setControlador(Controller controlador){
+
+    /**
+     * Añade keyListener
+     *
+     * @param controlador
+     */
+    void setControlador(Controller controlador) {
         addKeyListener(controlador);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-         //Aqui se pinta la serpiente
-        String msgR=(String) arg;
-        String[] args= msgR.split(";");
-        Color color = (Boolean.parseBoolean(args[0]))? coloresJugador[Integer.parseInt(args[1])]:coloresTablero[Integer.parseInt(args[1])];
+        //Aqui se pinta la serpiente
+        String msgR = (String) arg;
+        String[] args = msgR.split(";");
+        Color color = (Boolean.parseBoolean(args[0])) ? coloresJugador[Integer.parseInt(args[1])] : coloresTablero[Integer.parseInt(args[1])];
         int x = Integer.parseInt(args[2]);
         int y = Integer.parseInt(args[3]);
         referencia[x][y].setBackground(color);
-        if(args.length > 4){
-            x=Integer.parseInt(args[4]);
-            y=Integer.parseInt(args[5]);
+        if (args.length > 4) {
+            x = Integer.parseInt(args[4]);
+            y = Integer.parseInt(args[5]);
             referencia[x][y].setBackground(coloresTablero[0]);
         }
     }
 }
-
-
-

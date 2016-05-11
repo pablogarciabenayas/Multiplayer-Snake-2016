@@ -5,10 +5,6 @@
  */
 package mp.snake.cliente;
 
-/**
- *
- * @author pablo
- */
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +12,11 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * Clase ClientThread, contiente thread que gestiona la lectura de las
+ * peticiones que le llegan del servidor.
+ */
 public class ClientThread extends Thread {
 
     private Socket socket;
@@ -23,8 +24,13 @@ public class ClientThread extends Thread {
     private ViewHandler gestor;
     private BufferedReader streamIn;
     private boolean fin;
+
     /**
-     * Constructor de la clase hebracliente
+     * Constructor de clase
+     *
+     * @param g
+     * @param s
+     * @throws IOException
      */
     ClientThread(ViewHandler g, Socket s) throws IOException {
         this.gestor = g;
@@ -32,8 +38,7 @@ public class ClientThread extends Thread {
         streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.fin = true;
     }
-    
-    
+
     @Override
     public void run() {
 
@@ -78,8 +83,12 @@ public class ClientThread extends Thread {
         }
 
     }
+
     /**
-     * Cierre de la hebra sin errores
+     * Metodo que permite cerrar el streamIn y el socket.
+     *
+     * @throws IOException
+     * @throws InterruptedException
      */
     public void end() throws IOException, InterruptedException {
         this.fin = false;
@@ -90,6 +99,5 @@ public class ClientThread extends Thread {
     }
 
     private void puntuacion() {
-
     }
 }

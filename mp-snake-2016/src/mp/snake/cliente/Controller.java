@@ -14,67 +14,76 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author luisca
+ * Clase Controller, implementa interface KeyListener.
  */
 class Controller implements KeyListener {
-   GameView vista;
-   ViewHandler gestor;
+
+    GameView vista;
+    ViewHandler gestor;
+
     /**
-     * Constructor
+     * Constructor de clase
+     *
+     * @param GameView
+     * @param ViewHandler
      */
-   public Controller(GameView vista, ViewHandler g)
-   {
-       this.vista=vista;
-       this.gestor=g;
-   }
-    
+    public Controller(GameView vista, ViewHandler g) {
+        this.vista = vista;
+        this.gestor = g;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
+
     /**
-     * Dependiendo de la tecla pulsada se manda un token o otro
+     * Realiza llamada a metodo de clase ViewHandler en funcion de la tecla
+     * pulsada.
+     *
+     * @param KeyEvent
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case VK_LEFT:{
-            try {
-                gestor.izquierda();
-            } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        switch (e.getKeyCode()) {
+            case VK_LEFT: {
+                try {
+                    gestor.izquierda();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             }
-            break;
+            case VK_RIGHT: {
+                try {
+                    gestor.derecha();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             }
-            case VK_RIGHT:{
-            try {
-                gestor.derecha();
-            } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            case VK_DOWN: {
+                try {
+                    gestor.abajo();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             }
-            break;
-            }case VK_DOWN:{
-            try {
-                gestor.abajo();
-            } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
-            }case VK_UP:{
-            try {
-                gestor.arriba();
-            } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
+            case VK_UP: {
+                try {
+                    gestor.arriba();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
             }
         }
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
-    
+
 }

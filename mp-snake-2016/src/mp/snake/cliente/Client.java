@@ -7,17 +7,17 @@ package mp.snake.cliente;
 
 /**
  *
- * @author pablo
+ * Clase Client, inciara el gestor de vistas.
  */
 public class Client {
 
     /**
-     * Carga la vista de la serpiente para el cliente
+     * Metodo main, crea objeto ViewHandler y hace llamada al metodo iniciar.
+     *
+     * @param args
      */
     public static void main(String[] args) {
         ViewHandler gestor = new ViewHandler();
         gestor.iniciar();
-        
     }
-    
 }
