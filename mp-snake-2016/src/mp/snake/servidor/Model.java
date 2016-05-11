@@ -23,7 +23,7 @@ public class Model extends Observable {
     private ArrayList<Player> jugadores;
     private int tableroX;
     private int tableroY;
-    private int velocidad = 400;
+    private int velocidad = 200;
     private Point tesoro;
     private Point tesoroTemporal;
     Thread hilo = iniciar();
@@ -242,8 +242,8 @@ public class Model extends Observable {
     /**
      * Fin del juego para el jugador.
      */
-    private void gameOver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void gameOver(int id) {
+        
     }
 
     /**
@@ -321,10 +321,10 @@ public class Model extends Observable {
 
                 //Choca contra si mismo
                 if (ll.contains(jugadores.get(id).getSerpiente().getFirst())) {
-                    gameOver();
+                    gameOver(id);
                     //Choca contra otros jugadores
                 } else if (chocaContraJugador(id)) {
-                    gameOver();
+                    gameOver(id);
                 } else {
                     jugadores.get(id).getSerpiente().removeLast();
 
@@ -335,28 +335,28 @@ public class Model extends Observable {
                             if (yIni > 0) {
                                 yIni--;
                             } else {
-                                gameOver();
+                                gameOver(id);
                             }
                             break;
                         case 1:
                             if (xIni > 0) {
                                 xIni--;
                             } else {
-                                gameOver();
+                                gameOver(id);
                             }
                             break;
                         case 2:
                             if (yIni < tableroY) {
                                 yIni++;
                             } else {
-                                gameOver();
+                                gameOver(id);
                             }
                             break;
                         case 3:
                             if (xFin < tableroX) {
                                 xIni++;
                             } else {
-                                gameOver();
+                                gameOver(id);
                             }
                             break;
                     }

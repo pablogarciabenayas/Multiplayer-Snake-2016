@@ -69,6 +69,8 @@ public class Handler extends Thread implements Observer {
                     case "DIR":
                         modeloServidor.cambiarDireccion(token[1], idClient); //Direccion del servidor
                         break;
+                    case "GO":
+                        modeloServidor.gameOver(Integer.parseInt(token[1]));
                     case "FIN": {
                         try {
                             modeloServidor.end();

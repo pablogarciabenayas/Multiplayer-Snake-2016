@@ -133,7 +133,7 @@ public class ViewHandler extends Observable {
      */
     public void finalizar() throws IOException, InterruptedException {
         tablero.dispose();
-        enviarMensaje("FIN;" + Integer.toString(idCliente));
+        enviarMensaje("GO;" + Integer.toString(idCliente));
         hebra.end();
         streamOut.close();
         socket.close();
