@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author pablo
  */
-public class ServerView extends javax.swing.JFrame {
+public class ServerView extends javax.swing.JFrame { //Vista del servidor con un boton para salir
 
     /**
      * Creates new form ServerView

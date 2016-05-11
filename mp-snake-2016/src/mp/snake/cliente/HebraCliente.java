@@ -23,7 +23,9 @@ public class HebraCliente extends Thread {
     private GestorVistas gestor;
     private BufferedReader streamIn;
     private boolean fin;
-
+    /**
+     * Constructor de la clase hebracliente
+     */
     HebraCliente(GestorVistas g, Socket s) throws IOException {
         this.gestor = g;
         this.socket = s;
@@ -75,7 +77,9 @@ public class HebraCliente extends Thread {
         }
 
     }
-
+    /**
+     * Cierre de la hebra sin errores
+     */
     public void end() throws IOException, InterruptedException {
         this.fin = false;
         Thread.sleep(500);

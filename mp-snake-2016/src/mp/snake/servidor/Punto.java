@@ -9,13 +9,16 @@ package mp.snake.servidor;
  *
  * @author pablo
  */
-public class Punto {
+public class Punto { 
     private int x;
     private int y;
 
     public Punto(){
         this(0,0);
     }
+     /**
+     * Constructor de la clase Punto
+     */
     
     public Punto(int x, int y) {
         this.x = x;

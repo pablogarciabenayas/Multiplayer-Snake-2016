@@ -14,7 +14,9 @@ public class HebraManejadora extends Thread {
     private BufferedReader streamIn;
     private boolean fin;
     private ModeloServidor modeloServidor;
-
+    /**
+     * Esta hebra se encarga de controlar el servidor correctamente
+     */
     public HebraManejadora(Socket socket, int idClient, ModeloServidor modelo) {
         this.socket = socket;
         this.idClient = idClient;
@@ -27,7 +29,7 @@ public class HebraManejadora extends Thread {
     public void run() {
 
         try {
-            // Creamos los streams para la lectura y escritura de objetos a traves de la conexion
+                        // Creamos los streams para la lectura y escritura de objetos a traves de la conexion
             streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
 
@@ -42,10 +44,10 @@ public class HebraManejadora extends Thread {
 
                 switch (cabecera) {
                     case "CON":
-                        modeloServidor.connect(idClient);
+                        modeloServidor.connect(idClient); //Conexion del cliente
                         break;
                     case "DIR":
-                        modeloServidor.cambiarDireccion(token[1],idClient);
+                        modeloServidor.cambiarDireccion(token[1],idClient); //Direccion del servidor
                         break;
                     case "FIN": {
                         try {

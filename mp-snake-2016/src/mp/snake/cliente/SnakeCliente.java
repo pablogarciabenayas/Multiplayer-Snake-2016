@@ -12,7 +12,7 @@ package mp.snake.cliente;
 public class SnakeCliente {
 
     /**
-     * @param args the command line arguments
+     * Carga la vista de la serpiente para el cliente
      */
     public static void main(String[] args) {
         GestorVistas gestor = new GestorVistas();

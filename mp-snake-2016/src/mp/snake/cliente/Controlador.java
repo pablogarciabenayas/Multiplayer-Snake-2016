@@ -19,7 +19,9 @@ import java.util.logging.Logger;
 class Controlador implements KeyListener {
    GameView vista;
    GestorVistas gestor;
-   
+    /**
+     * Constructor
+     */
    public Controlador(GameView vista, GestorVistas g)
    {
        this.vista=vista;
@@ -31,7 +33,9 @@ class Controlador implements KeyListener {
     public void keyTyped(KeyEvent e) {
         
     }
-
+    /**
+     * Dependiendo de la tecla pulsada se manda un token o otro
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){

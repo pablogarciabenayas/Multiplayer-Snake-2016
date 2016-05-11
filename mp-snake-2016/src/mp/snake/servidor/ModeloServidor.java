@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author pablo
  */
 public class ModeloServidor {
-
+    
     private ArrayList<Jugador> jugadores;
     private int tableroX;
     private int tableroY;
@@ -27,7 +27,9 @@ public class ModeloServidor {
     private Punto tesoroTemporal;
     Thread hilo = iniciar();
     private boolean terminar;
-
+    /**
+     * Constructor del modelo del servidor,con sus tesoros temporales,  los numeros de jugadores, tesoros normales.
+     */
     public ModeloServidor(int tamX, int tamY) throws IOException {
         terminar = false;
         jugadores = new ArrayList<>();
@@ -39,7 +41,9 @@ public class ModeloServidor {
         hilo.start();
 
     }
-
+    /**
+     * Se añaden jugadores con este metodo
+     */
     public void addJugador(int id, Socket s) throws IOException {
         Random rnd = new Random();
         Punto punto = new Punto(rnd.nextInt(tableroX), rnd.nextInt(tableroY));
@@ -76,7 +80,7 @@ public class ModeloServidor {
     public boolean isTerminar() {
         return terminar;
     }
-
+    
     public void enviarMensaje(String s) throws IOException {
         System.out.println("a clientes:" + s);
         for (Jugador j : jugadores) {
@@ -84,7 +88,9 @@ public class ModeloServidor {
             j.getStreamOut().flush();
         }
     }
-
+    /**
+     * Dependiendo del token recibido, lo devuelve moviendo la serpiente en la direccion
+     */
     public void cambiarDireccion(String token, int id) {
         switch (token) {
             case "ARRIBA":
@@ -128,14 +134,18 @@ public class ModeloServidor {
             jugadores.get(id).setDireccion(2);
         }
     }
-
+    /**
+     * Se pintan los tesoros normales
+     */
     private void pintarTesoro(int x, int y, int t) throws IOException {
         String cabecera = "TSR";
         String cuerpo = t + ";" + x + ";" + y;
         enviarMensaje(cabecera + ";" + cuerpo);
 
     }
-
+    /**
+     * Se añaden los tesoros 
+     */
     private void addTesoro(int t) throws IOException {
         Random rnd = new Random();
 
@@ -151,7 +161,9 @@ public class ModeloServidor {
             pintarTesoro(tesoroTemporal.getX(), tesoroTemporal.getY(), 2);
         }
     }
-
+    /**
+     * Dependiendo del tesoro comido aumenta la puntuacion del jugador 1, 2 o 3.. etc
+     */
     public void tesoroComido(int t, int id) throws IOException {
         if (t == 1) {
             //actualizar puntuacion jugador id con puntuacion tesoro tipo 1; 
@@ -161,7 +173,9 @@ public class ModeloServidor {
         }
         jugadores.get(id).getSerpiente().add(new Punto());
     }
-
+    /**
+     * Fin del juego
+     */
     private void gameOver() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -171,7 +185,9 @@ public class ModeloServidor {
         String cuerpo = id + ";" + xIni + ";" + yIni + ";" + xFin + ";" + yFin;
         enviarMensaje(cabecera + ";" + cuerpo);
     }
-
+    /**
+     * Para iniciar el hilo
+     */
     public Thread iniciar() {
 
         return new Thread() {
@@ -214,7 +230,9 @@ public class ModeloServidor {
                 }
 
             }
-
+            /**
+     * Actualizacion de  las posiciones de los jugadores y si choca contra si mismo u otros jugadores.
+     */
             private void actualizarPosicion(int id) throws IOException {
 
                 int xIni = ((Punto) jugadores.get(id).getSerpiente().getFirst()).getX();
@@ -274,7 +292,9 @@ public class ModeloServidor {
             }
             
             
-
+            /**
+             * Resolucion final si se chocan dos jugadores
+             */
             private boolean chocaContraJugador(int id) {
                 boolean choca = false;
 
@@ -287,7 +307,9 @@ public class ModeloServidor {
                 }
                 return choca;
             }
-
+               /**
+             * Si el tesoro es comido la serpiente crece
+             */
             private void isTesoroComido(int id) throws IOException {
                 if (tesoro.equals((Punto) jugadores.get(id).getSerpiente().getFirst())) {
                     tesoroComido(1, id);

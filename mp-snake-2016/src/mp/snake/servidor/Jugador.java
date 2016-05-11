@@ -21,7 +21,9 @@ public class Jugador {
     private int direccion;
     private Socket socket;
     private DataOutputStream streamOut;
-
+     /**
+     * Constructor de la clase jugador
+     */
     public Jugador(LinkedList serpiente, int idCliente , Socket sc) throws IOException {
         this.serpiente = serpiente;
         this.idCliente = idCliente;
@@ -34,31 +36,43 @@ public class Jugador {
     public LinkedList getSerpiente() {
         return serpiente;
     }
-
-    public int getIdCliente() {
+     /**
+     * Devuelve la ID del cliente
+     */
+    public int getIdCliente() { 
         return idCliente;
     }
-
-    public void setIdCliente(int idCliente) {
+     /**
+     * Setea la Id del cliente que le digas
+     */
+    public void setIdCliente(int idCliente) { 
         this.idCliente = idCliente;
     }
-
-    public int getDireccion() {
+     /**
+     * Devuelve la direccion Ip
+     */
+    public int getDireccion() { 
         return direccion;
     }
-
-    public void setDireccion(int direccion) {
+     /**
+     * Setea la direccion que le digas
+     */
+    public void setDireccion(int direccion) { 
         this.direccion = direccion;
     }
     
     public Jugador copia() throws CloneNotSupportedException{
         return (Jugador)this.clone();
     }
-
+    /**
+     * Devuelve el socket
+     */
     public Socket getSocket() {
         return socket;
     }
-
+    /**
+     * Devuelve el socket introduciendole uno
+     */
     public void setSocket(Socket socket) {
         this.socket = socket;
     }

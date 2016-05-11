@@ -7,7 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketServidor {
-
+    /**
+     * Creamos un socket de aceptacion, en el servidor esperando conexiones, Vista del servidor con boton para finalizar el servidor, a medida que se conectan los clientes se crean hebras para atenderlos a traves de los sockets correspondientes
+     */
     public static void main(String[] args) throws IOException {
             
      // Creamos un Socket de aceptación en el servidor esperando conexiones

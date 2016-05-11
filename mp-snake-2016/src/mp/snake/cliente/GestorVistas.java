@@ -23,12 +23,16 @@ public class GestorVistas extends Observable {
     private Conexion conexion = new Conexion(this);
     private Socket socket;
     private DataOutputStream streamOut;
-
+    /**
+     * Inicia las vistas
+     */
     public void iniciar() {
         conexion.setLocationRelativeTo(null);
         conexion.setVisible(true);
     }
-
+/**
+     * Conecta con el servidor 
+     */
     public void conectar() throws IOException {
         conexion.dispose();
         socket = new Socket(conexion.getDireccionIp(), conexion.getPuerto());
@@ -38,13 +42,17 @@ public class GestorVistas extends Observable {
         hebra = new HebraCliente(this, socket);
         hebra.start();
     }
-
+    /**
+     * Paso de mensajes 
+     */
     private void enviarMensaje(String con) throws IOException {
         System.out.println(con + " al servidor ");
         streamOut.writeBytes(con + "\n");
         streamOut.flush();
     }
-
+    /**
+     * Automaticamente comienza el juego
+     */
     void empezar(String token, String token0, String token1) {
 
         this.idCliente = Integer.parseInt(token);
@@ -54,7 +62,7 @@ public class GestorVistas extends Observable {
             tablero = new GameView(x, y, idCliente, this);
             controlador = new Controlador(tablero, this);
             tablero.setControlador(controlador);
-            tablero.setSize(700, 500); // revisar tamaño tablero
+            tablero.setSize(700, 700); // revisar tamaño tablero
             tablero.setLocationRelativeTo(null);
             tablero.setVisible(true);
             addObserver(tablero);
@@ -98,7 +106,9 @@ public class GestorVistas extends Observable {
         setChanged();
         notifyObservers(true + ";" + token + ";" + token0 + ";" + token1 + ";" + token2 + ";" + token3);
     }
-
+    /**
+     * Se imprimen los tesoros
+     */
     public void imprimirTesoro(String token, String token0, String token1) {
         setChanged();
         System.out.println("token:" + token);
