@@ -9,15 +9,17 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.SetChangeListener;
 
 /**
  *
  * @author pablo
  */
-public class ModeloServidor {
+public class ModeloServidor extends Observable{
     
     private ArrayList<Jugador> jugadores;
     private int tableroX;
@@ -66,12 +68,6 @@ public class ModeloServidor {
         //Enviar mensaje de finalizar a todos los jugadores
         //Cerrar socket
         String cabecera = "FIN";
-        
-        for(Jugador j:jugadores){
-            enviarMensaje(cabecera);
-            j.getStreamOut().close();
-            j.getSocket().close();
-        }
         this.terminar = true;
         
 
@@ -82,11 +78,11 @@ public class ModeloServidor {
     }
     
     public void enviarMensaje(String s) throws IOException {
-        System.out.println("a clientes:" + s);
-        for (Jugador j : jugadores) {
-            j.getStreamOut().writeBytes(s + "\n");
-            j.getStreamOut().flush();
-        }
+        setChanged();
+        notifyObservers(s);
+        
+             
+        
     }
     /**
      * Dependiendo del token recibido, lo devuelve moviendo la serpiente en la direccion

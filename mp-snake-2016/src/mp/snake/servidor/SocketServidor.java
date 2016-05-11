@@ -5,6 +5,7 @@ package mp.snake.servidor;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Observer;
 
 public class SocketServidor {
     /**
@@ -29,7 +30,8 @@ public class SocketServidor {
             Socket socket = svrSocket.accept();
             System.out.println("Cliente-" + idClient + " conectado");
             modeloServidor.addJugador(idClient,socket);
-            Thread t = new HebraManejadora(socket, idClient, modeloServidor);
+            HebraManejadora t = new HebraManejadora(socket, idClient, modeloServidor);
+            modeloServidor.addObserver(t);
             t.start();
             
             idClient++;          

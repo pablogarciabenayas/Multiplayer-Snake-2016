@@ -19,8 +19,6 @@ public class Jugador {
     private LinkedList serpiente;
     private int idCliente;
     private int direccion;
-    private Socket socket;
-    private DataOutputStream streamOut;
      /**
      * Constructor de la clase jugador
      */
@@ -29,8 +27,7 @@ public class Jugador {
         this.idCliente = idCliente;
         Random rnd = new Random();
         this.direccion = rnd.nextInt(4);
-        this.socket = sc;
-        streamOut = new DataOutputStream(socket.getOutputStream());
+        
     }
 
     public LinkedList getSerpiente() {
@@ -64,28 +61,5 @@ public class Jugador {
     public Jugador copia() throws CloneNotSupportedException{
         return (Jugador)this.clone();
     }
-    /**
-     * Devuelve el socket
-     */
-    public Socket getSocket() {
-        return socket;
-    }
-    /**
-     * Devuelve el socket introduciendole uno
-     */
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
-    public DataOutputStream getStreamOut() {
-        return streamOut;
-    }
-
-    public void setStreamOut(DataOutputStream streamOut) {
-        this.streamOut = streamOut;
-    }
-    
-    
-    
-    
+  
 }
