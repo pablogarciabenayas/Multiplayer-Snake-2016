@@ -16,23 +16,24 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HebraCliente extends Thread {
+public class ClientThread extends Thread {
 
     private Socket socket;
     private int idClient;
-    private GestorVistas gestor;
+    private ViewHandler gestor;
     private BufferedReader streamIn;
     private boolean fin;
     /**
      * Constructor de la clase hebracliente
      */
-    HebraCliente(GestorVistas g, Socket s) throws IOException {
+    ClientThread(ViewHandler g, Socket s) throws IOException {
         this.gestor = g;
         this.socket = s;
         streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.fin = true;
     }
-
+    
+    
     @Override
     public void run() {
 
@@ -70,10 +71,10 @@ public class HebraCliente extends Thread {
 
             }
         } catch (IOException ex) {
-            Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(HebraCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

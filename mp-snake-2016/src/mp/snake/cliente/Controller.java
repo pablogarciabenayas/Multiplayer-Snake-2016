@@ -16,13 +16,13 @@ import java.util.logging.Logger;
  *
  * @author luisca
  */
-class Controlador implements KeyListener {
+class Controller implements KeyListener {
    GameView vista;
-   GestorVistas gestor;
+   ViewHandler gestor;
     /**
      * Constructor
      */
-   public Controlador(GameView vista, GestorVistas g)
+   public Controller(GameView vista, ViewHandler g)
    {
        this.vista=vista;
        this.gestor=g;
@@ -43,7 +43,7 @@ class Controlador implements KeyListener {
             try {
                 gestor.izquierda();
             } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             }
@@ -51,21 +51,21 @@ class Controlador implements KeyListener {
             try {
                 gestor.derecha();
             } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             }case VK_DOWN:{
             try {
                 gestor.abajo();
             } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             }case VK_UP:{
             try {
                 gestor.arriba();
             } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
             }

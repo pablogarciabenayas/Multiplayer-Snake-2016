@@ -9,13 +9,13 @@ package mp.snake.cliente;
  *
  * @author pablo
  */
-public class SnakeCliente {
+public class Client {
 
     /**
      * Carga la vista de la serpiente para el cliente
      */
     public static void main(String[] args) {
-        GestorVistas gestor = new GestorVistas();
+        ViewHandler gestor = new ViewHandler();
         gestor.iniciar();
         
     }

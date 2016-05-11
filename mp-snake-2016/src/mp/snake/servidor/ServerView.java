@@ -19,13 +19,13 @@ public class ServerView extends javax.swing.JFrame { //Vista del servidor con un
      * Creates new form ServerView
      */
     
-    private ModeloServidor modelo;
+    private Model modelo;
     
     public ServerView() {
         initComponents();
     }
 
-    public ServerView(ModeloServidor m) {
+    public ServerView(Model m) {
         this.modelo = m;
         initComponents();
     }

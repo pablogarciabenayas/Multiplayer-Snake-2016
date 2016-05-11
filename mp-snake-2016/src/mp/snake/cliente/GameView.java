@@ -24,10 +24,10 @@ public class GameView extends javax.swing.JFrame  implements Observer{
         private JPanel[][] referencia;
         private Color[] coloresTablero={Color.WHITE,Color.BLACK,Color.ORANGE};
         private Color[] coloresJugador={Color.RED,Color.BLUE,Color.PINK,Color.BLUE,Color.YELLOW};
-        private GestorVistas gestor;
+        private ViewHandler gestor;
         
  
-    public GameView(int filas, int columnas, int id, GestorVistas g) {
+    public GameView(int filas, int columnas, int id, ViewHandler g) {
         initComponents();
         jButtonFinalizar.setFocusable(false);
         layout =new GridLayout(filas, columnas);
@@ -128,7 +128,7 @@ public class GameView extends javax.swing.JFrame  implements Observer{
     setVisible(true);
         setLocationRelativeTo(null);
     }
-    void setControlador(Controlador controlador){
+    void setControlador(Controller controlador){
         addKeyListener(controlador);
     }
 

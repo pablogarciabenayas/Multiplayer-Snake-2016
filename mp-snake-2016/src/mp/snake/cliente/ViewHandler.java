@@ -14,13 +14,13 @@ import java.util.Observable;
  *
  * @author pablo
  */
-public class GestorVistas extends Observable {
+public class ViewHandler extends Observable {
 
     private GameView tablero;
-    private Controlador controlador;
+    private Controller controlador;
     private int idCliente;
-    private HebraCliente hebra;
-    private Conexion conexion = new Conexion(this);
+    private ClientThread hebra;
+    private ConnectView conexion = new ConnectView(this);
     private Socket socket;
     private DataOutputStream streamOut;
     /**
@@ -39,7 +39,7 @@ public class GestorVistas extends Observable {
         streamOut = new DataOutputStream(socket.getOutputStream());
         enviarMensaje("CON;");
 
-        hebra = new HebraCliente(this, socket);
+        hebra = new ClientThread(this, socket);
         hebra.start();
     }
     /**
@@ -60,7 +60,7 @@ public class GestorVistas extends Observable {
         int y = Integer.parseInt(token1);
         if (tablero == null) {
             tablero = new GameView(x, y, idCliente, this);
-            controlador = new Controlador(tablero, this);
+            controlador = new Controller(tablero, this);
             tablero.setControlador(controlador);
             tablero.setSize(700, 700); // revisar tamaño tablero
             tablero.setLocationRelativeTo(null);

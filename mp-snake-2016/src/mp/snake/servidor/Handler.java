@@ -10,19 +10,19 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HebraManejadora extends Thread implements Observer{
+public class Handler extends Thread implements Observer{
 
     private Socket socket;
     private int idClient;
     private BufferedReader streamIn;
     private boolean fin;
-    private ModeloServidor modeloServidor;
+    private Model modeloServidor;
     private DataOutputStream streamOut;
 
     /**
      * Esta hebra se encarga de controlar el servidor correctamente
      */
-    public HebraManejadora(Socket socket, int idClient, ModeloServidor modelo) throws IOException {
+    public Handler(Socket socket, int idClient, Model modelo) throws IOException {
         this.socket = socket;
         this.idClient = idClient;
         this.fin = true;
@@ -58,7 +58,7 @@ public class HebraManejadora extends Thread implements Observer{
                         try {
                             modeloServidor.end();
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     break;
@@ -70,14 +70,14 @@ public class HebraManejadora extends Thread implements Observer{
 
             }
         } catch (IOException ex) {
-            Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
 
             try {
                 streamIn.close();
                 //streamOut.close();
             } catch (IOException ex) {
-                Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -90,7 +90,7 @@ public class HebraManejadora extends Thread implements Observer{
             streamOut.writeBytes(msg + "\n");
             streamOut.flush();
         } catch (IOException ex) {
-            Logger.getLogger(HebraManejadora.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

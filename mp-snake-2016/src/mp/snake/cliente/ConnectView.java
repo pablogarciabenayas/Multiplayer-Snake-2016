@@ -13,13 +13,13 @@ import java.util.logging.Logger;
  *
  * @author pablo
  */
-public class Conexion extends javax.swing.JFrame {
+public class ConnectView extends javax.swing.JFrame {
 
     /**
-     * Creates new form Conexion
+     * Creates new form ConnectView
      * 
      */
-    private GestorVistas gestor;
+    private ViewHandler gestor;
 
     public String getDireccionIp() {
         return jTextFieldIP.getText();
@@ -28,11 +28,11 @@ public class Conexion extends javax.swing.JFrame {
     public int getPuerto() {
         return Integer.parseInt(jTextFieldPuerto.getText());
     }
-    public Conexion() {
+    public ConnectView() {
         initComponents();
     }
 
-    Conexion(GestorVistas g) {
+    ConnectView(ViewHandler g) {
         this.gestor = g;
         initComponents();
     }
@@ -122,7 +122,7 @@ public class Conexion extends javax.swing.JFrame {
             // TODO add your handling code here:
             gestor.conectar();
         } catch (IOException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConnectView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonConectarActionPerformed
 

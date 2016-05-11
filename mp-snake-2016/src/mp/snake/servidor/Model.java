@@ -13,18 +13,17 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.SetChangeListener;
 
 /**
  *
  * @author pablo
  */
-public class ModeloServidor extends Observable{
+public class Model extends Observable{
     
     private ArrayList<Jugador> jugadores;
     private int tableroX;
     private int tableroY;
-    private int velocidad = 800;
+    private int velocidad = 400;
     private Punto tesoro;
     private Punto tesoroTemporal;
     Thread hilo = iniciar();
@@ -32,7 +31,7 @@ public class ModeloServidor extends Observable{
     /**
      * Constructor del modelo del servidor,con sus tesoros temporales,  los numeros de jugadores, tesoros normales.
      */
-    public ModeloServidor(int tamX, int tamY) throws IOException {
+    public Model(int tamX, int tamY) throws IOException {
         terminar = false;
         jugadores = new ArrayList<>();
         this.tableroX = tamX;
@@ -214,12 +213,12 @@ public class ModeloServidor extends Observable{
                         try {
                             pintarTesoro(tesoroTemporal.getX(), tesoroTemporal.getY(), 0);
                         } catch (IOException ex) {
-                            Logger.getLogger(ModeloServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         try {
                             addTesoro(2);
                         } catch (IOException ex) {
-                            Logger.getLogger(ModeloServidor.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
 
