@@ -16,10 +16,10 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pablo
+ * Clase Model, contiene el modelo de la aplicacion.
  */
-public class Model extends Observable{
-    
+public class Model extends Observable {
+
     private ArrayList<Player> jugadores;
     private int tableroX;
     private int tableroY;
@@ -28,8 +28,14 @@ public class Model extends Observable{
     private Point tesoroTemporal;
     Thread hilo = iniciar();
     private boolean terminar;
+
     /**
-     * Constructor del modelo del servidor,con sus tesoros temporales,  los numeros de jugadores, tesoros normales.
+     * Constructor de clase, recibe el tamaño del tablero de juego para
+     * inciarse.
+     *
+     * @param tamX
+     * @param tamY
+     * @throws IOException
      */
     public Model(int tamX, int tamY) throws IOException {
         terminar = false;
@@ -42,8 +48,13 @@ public class Model extends Observable{
         hilo.start();
 
     }
+
     /**
-     * Se añaden jugadores con este metodo
+     * Metodo que permite añadir nuevos jugadores.
+     *
+     * @param id
+     * @param s
+     * @throws IOException
      */
     public void addJugador(int id, Socket s) throws IOException {
         Random rnd = new Random();
@@ -56,6 +67,12 @@ public class Model extends Observable{
 
     }
 
+    /**
+     * Protocolo de comunicacion inical, envia IDC y el tamaño del tablero.
+     *
+     * @param id
+     * @throws IOException
+     */
     public void connect(int id) throws IOException {
         String cabecera = "IDC";
         String cuerpo = id + ";" + tableroX + ";" + tableroY;
@@ -63,28 +80,45 @@ public class Model extends Observable{
         pintarTesoro(tesoro.getX(), tesoro.getY(), 1);
     }
 
+    /**
+     * Finalizacion del juego, desconecta a todos los clientes.
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void end() throws IOException, InterruptedException {
         //Enviar mensaje de finalizar a todos los jugadores
         //Cerrar socket
         String cabecera = "FIN";
         this.terminar = true;
-        
 
     }
 
+    /**
+     *
+     * @return terminar
+     */
     public boolean isTerminar() {
         return terminar;
     }
-    
+
+    /**
+     * Notifica cambios a los observadores.
+     *
+     * @param s
+     * @throws IOException
+     */
     public void enviarMensaje(String s) throws IOException {
         setChanged();
         notifyObservers(s);
-        
-             
-        
+
     }
+
     /**
-     * Dependiendo del token recibido, lo devuelve moviendo la serpiente en la direccion
+     * Cambio de direccion
+     *
+     * @param token
+     * @param id
      */
     public void cambiarDireccion(String token, int id) {
         switch (token) {
@@ -105,6 +139,11 @@ public class Model extends Observable{
 
     }
 
+    /**
+     * Cambio de direccion, direccion arriba.
+     *
+     * @param id
+     */
     public void arriba(int id) {
         if (jugadores.get(id).getDireccion() != 3) {
             jugadores.get(id).setDireccion(1);
@@ -112,25 +151,46 @@ public class Model extends Observable{
 
     }
 
+    /**
+     * Cambio de direccion, direccion abajo.
+     *
+     * @param id
+     */
     public void abajo(int id) {
         if (jugadores.get(id).getDireccion() != 1) {
             jugadores.get(id).setDireccion(3);
         }
     }
 
+    /**
+     * Cambio de direccion, direccion izquierda.
+     *
+     * @param id
+     */
     public void izquierda(int id) {
         if (jugadores.get(id).getDireccion() != 2) {
             jugadores.get(id).setDireccion(0);
         }
     }
 
+    /**
+     * Cambio de direccion, direccion derecha.
+     *
+     * @param id
+     */
     public void derecha(int id) {
         if (jugadores.get(id).getDireccion() != 0) {
             jugadores.get(id).setDireccion(2);
         }
     }
+
     /**
-     * Se pintan los tesoros normales
+     * Protocolo de comunicacion para imprimir el tesoro.
+     *
+     * @param x
+     * @param y
+     * @param t
+     * @throws IOException
      */
     private void pintarTesoro(int x, int y, int t) throws IOException {
         String cabecera = "TSR";
@@ -138,8 +198,12 @@ public class Model extends Observable{
         enviarMensaje(cabecera + ";" + cuerpo);
 
     }
+
     /**
-     * Se añaden los tesoros 
+     * Permite añadir tesoro de tipo 1(normal) y 2(temporal).
+     *
+     * @param t
+     * @throws IOException
      */
     private void addTesoro(int t) throws IOException {
         Random rnd = new Random();
@@ -156,8 +220,14 @@ public class Model extends Observable{
             pintarTesoro(tesoroTemporal.getX(), tesoroTemporal.getY(), 2);
         }
     }
+
     /**
-     * Dependiendo del tesoro comido aumenta la puntuacion del jugador 1, 2 o 3.. etc
+     * Determina si el tesoro en juego ha sido comido, y añade puntuación al
+     * jugador.
+     *
+     * @param t
+     * @param id
+     * @throws IOException
      */
     public void tesoroComido(int t, int id) throws IOException {
         if (t == 1) {
@@ -168,20 +238,33 @@ public class Model extends Observable{
         }
         jugadores.get(id).getSerpiente().add(new Point());
     }
+
     /**
-     * Fin del juego
+     * Fin del juego para el jugador.
      */
     private void gameOver() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param id
+     * @param xIni
+     * @param yIni
+     * @param xFin
+     * @param yFin
+     * @throws IOException
+     */
     private void posicionToJugadores(int id, int xIni, int yIni, int xFin, int yFin) throws IOException {
         String cabecera = "MOV";
         String cuerpo = id + ";" + xIni + ";" + yIni + ";" + xFin + ";" + yFin;
         enviarMensaje(cabecera + ";" + cuerpo);
     }
+
     /**
-     * Para iniciar el hilo
+     * Inicia hilo
+     *
+     * @return
      */
     public Thread iniciar() {
 
@@ -225,9 +308,7 @@ public class Model extends Observable{
                 }
 
             }
-            /**
-     * Actualizacion de  las posiciones de los jugadores y si choca contra si mismo u otros jugadores.
-     */
+
             private void actualizarPosicion(int id) throws IOException {
 
                 int xIni = ((Point) jugadores.get(id).getSerpiente().getFirst()).getX();
@@ -285,11 +366,7 @@ public class Model extends Observable{
                 }
 
             }
-            
-            
-            /**
-             * Resolucion final si se chocan dos jugadores
-             */
+
             private boolean chocaContraJugador(int id) {
                 boolean choca = false;
 
@@ -302,9 +379,7 @@ public class Model extends Observable{
                 }
                 return choca;
             }
-               /**
-             * Si el tesoro es comido la serpiente crece
-             */
+
             private void isTesoroComido(int id) throws IOException {
                 if (tesoro.equals((Point) jugadores.get(id).getSerpiente().getFirst())) {
                     tesoroComido(1, id);
