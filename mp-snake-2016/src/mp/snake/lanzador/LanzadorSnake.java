@@ -10,10 +10,12 @@ package mp.snake.lanzador;
  * @author pablo
  */
 public class LanzadorSnake {
-    
+    /**
+     * Carga la vista inicial para escoger el cliente o el servidor
+     */
     public static void main(String[] args){
-        LanzadorVista vistaInicial = new LanzadorVista();
-        vistaInicial.setLocationRelativeTo(null);
+        LanzadorVista vistaInicial = new LanzadorVista(); //Carga la vista inicial para escoger el cliente o el servidor
+        vistaInicial.setLocationRelativeTo(null);//Localizacion dentro de la pantalla 
         vistaInicial.setVisible(true);
         
     }
