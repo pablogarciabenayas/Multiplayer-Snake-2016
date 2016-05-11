@@ -34,6 +34,7 @@ public class ViewHandler extends Observable {
 
     /**
      * Conecta con el servidor.
+     * @throws IOException 
      */
     public void conectar() throws IOException {
         conexion.dispose();
